@@ -11,6 +11,7 @@ import java.lang.RuntimeException
 
 class WelcomeFragment: Fragment() {
 
+
    private var _binding: WelcomeFragmentBinding? = null
    private val binding: WelcomeFragmentBinding
        get() = _binding ?: throw RuntimeException ("WelcomeFragmentBinding == null")
@@ -24,8 +25,17 @@ class WelcomeFragment: Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonUnderstand
+        binding.buttonUnderstand.setOnClickListener {
+            launchChooseLevelFragment()
+        }
     }
+    private fun launchChooseLevelFragment(){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ChooseLevelFragment.newInstance())
+            .addToBackStack(null)
+            .commit()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
