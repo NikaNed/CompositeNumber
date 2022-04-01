@@ -58,6 +58,7 @@ class GameFinishedFragment : Fragment() {
             gameResult = it
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

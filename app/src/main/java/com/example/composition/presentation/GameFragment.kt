@@ -73,7 +73,6 @@ class GameFragment : Fragment() {
                 }
             }
         }
-
         private const val KEY_LEVEL = "level"
     }
 }
