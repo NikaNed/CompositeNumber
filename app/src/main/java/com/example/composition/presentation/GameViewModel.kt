@@ -67,11 +67,13 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         getGameSettings(level)
         startTimer()
         generateQuestion()
+        updateProgress()
     }
 
     private fun getGameSettings(level: Level) {
         this.level = level
         this.gameSettings = getGameSettingsUseCase(level)
+        _minPercent.value = gameSettings.minPercentOfRightAnswers
     }
 
     private fun startTimer() {
@@ -81,7 +83,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             override fun onTick(millisUntilFinished: Long) {
                 _formattedTime.value = formatTime(millisUntilFinished)
             }
-
             override fun onFinish() {
                 finishGame()
             }
@@ -93,7 +94,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         _question.value = generateQuestionUseCase(gameSettings.maxSumValue)
     }
 
-    private fun chooseAnswer(number: Int) {
+    fun chooseAnswer(number: Int) {
         checkAnswer(number)
         updateProgress()
         generateQuestion()
@@ -110,8 +111,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private fun updateProgress() {
         val percent = calculatePercent()
         _percentOfRightAnswers.value = percent
-        _progressAnswers.value = String().format(
-            context.resources.getString(R.string.progress_answer), //получаем строку из ресурсов
+        _progressAnswers.value = String.format(context.resources.getString(R.string.progress_answer),
+            //получаем строку из ресурсов
             countOfRightAnswers, //передаем количество правильных ответов
             gameSettings.minCountOfRightAnswers //берем из настроек игры мин кол-во правильных ответов
         )
@@ -120,6 +121,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun calculatePercent(): Int {
+        if (countOfQuestion == 0) {
+            return 0
+        }
         return ((countOfRightAnswers / countOfQuestion.toDouble()) * 100).toInt()
     }
 
