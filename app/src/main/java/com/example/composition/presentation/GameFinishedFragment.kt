@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.composition.R
 import com.example.composition.databinding.GameFinishedFragmentBinding
 import com.example.composition.domain.entites.GameResult
 
@@ -33,6 +34,39 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupOnClickListener()
+        bindViews()
+    }
+
+    private fun bindViews() {
+        with(binding) {
+            emojiResult.setImageResource(getSmileResId())
+            tvRequiredAnswer.text = String.format(
+                getString(R.string.required_answer),
+                gameResult.gameSettings.minCountOfRightAnswers
+            )
+            tvScoreAnswer.text = String.format(
+                getString(R.string.score_answer),
+                gameResult.countOfRightAnswers
+            )
+            tvRequiredPercentage.text = String.format(
+                getString(R.string.required_percentage),
+                gameResult.gameSettings.minPercentOfRightAnswers
+            )
+            tvScorePercentage.text = String.format(
+                getString(R.string.score_percentage),
+                getPercentOfRightAnswers()
+            )
+        }
+    }
+
+    private fun getSmileResId(): Int {
+        return if (gameResult.winner)
+            R.drawable.ic_emoji_happy
+        else R.drawable.ic_emoji_sad
+    }
+
+    private fun setupOnClickListener() {
         val callback = object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -46,6 +80,13 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
+    private fun getPercentOfRightAnswers() = with(gameResult) {
+        if (countOfQuestions == 0) {
+            return 0
+        }
+        ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+    }
+
     private fun retryGame() {
         requireActivity().supportFragmentManager.popBackStack(
             GameFragment.NAME,
@@ -54,7 +95,7 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let{
+        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
             gameResult = it
         }
     }
