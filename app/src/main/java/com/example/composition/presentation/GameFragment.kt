@@ -18,12 +18,12 @@ import com.example.composition.domain.entites.Level
 class GameFragment : Fragment() {
 
     private lateinit var level: Level
+    private val viewModelFactory by lazy { //создание фабрики
+        GameViewModelFactory(level, requireActivity().application)
+    }
 
-    private val viewModel by lazy { //при первом обращении к viewModel будет проициализирован этим значением
-        ViewModelProvider(
-            this,
-            AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[GameViewModel::class.java]
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[GameViewModel::class.java]
     }
 
     private val tvOption by lazy {
@@ -58,7 +58,6 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         setClickListenersToOption()
-        viewModel.startGame(level)
     }
 
     private fun setClickListenersToOption() { //установка слушателей на выбор ответа

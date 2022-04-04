@@ -2,9 +2,9 @@ package com.example.composition.presentation
 
 import android.app.Application
 import android.os.CountDownTimer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.composition.R
 import com.example.composition.data.GameRepositoryImpl
 import com.example.composition.domain.entites.GameResult
@@ -14,14 +14,14 @@ import com.example.composition.domain.entites.Question
 import com.example.composition.domain.usecase.GenerateQuestionUseCase
 import com.example.composition.domain.usecase.GetGameSettingsUseCase
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+class GameViewModel(
+    private val level: Level,
+    private val application: Application
+) : ViewModel() {
 
-    private lateinit var level: Level
     private lateinit var gameSettings: GameSettings
 
     private var timer: CountDownTimer? = null
-
-    private val context = application
 
     private val repository = GameRepositoryImpl
 
@@ -63,15 +63,18 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private var countOfRightAnswers = 0
     private var countOfQuestion = 0
 
-    fun startGame(level: Level) {
-        getGameSettings(level)
+    init { //при создании viewModel игра стартует автоматически и не нужно вызывать его из фрагмента
+        startGame()
+    }
+
+    private fun startGame() {
+        getGameSettings()
         startTimer()
         generateQuestion()
         updateProgress()
     }
 
-    private fun getGameSettings(level: Level) {
-        this.level = level
+    private fun getGameSettings() {
         this.gameSettings = getGameSettingsUseCase(level)
         _minPercent.value = gameSettings.minPercentOfRightAnswers
     }
@@ -111,7 +114,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private fun updateProgress() {
         val percent = calculatePercent()
         _percentOfRightAnswers.value = percent
-        _progressAnswers.value = String.format(context.resources.getString(R.string.progress_answer),
+        _progressAnswers.value = String.format(application.resources.getString(R.string.progress_answer),
             //получаем строку из ресурсов
             countOfRightAnswers, //передаем количество правильных ответов
             gameSettings.minCountOfRightAnswers //берем из настроек игры мин кол-во правильных ответов
