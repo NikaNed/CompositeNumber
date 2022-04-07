@@ -1,8 +1,10 @@
 package com.example.composition.presentation
 
 import android.app.Application
+import androidx.annotation.NonNull
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.composition.domain.entites.GameResult
 import com.example.composition.domain.entites.Level
 import java.lang.RuntimeException
 
