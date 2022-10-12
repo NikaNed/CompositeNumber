@@ -12,7 +12,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light"
         tools:context=".presentation.GameFinishedFragment">
 
         <ImageView
@@ -25,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_emoji_happy"
+            tools:srcCompat="@drawable/ic_star_emoji"
             app:emojiResult="@{gameResult.winner}"/>
 
         <TextView
@@ -85,6 +84,7 @@
             android:id="@+id/button_retry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+        android:backgroundTint="@color/pink"
             android:text="@string/button_retry"
             app:layout_constraintBottom_toBottomOf="parent" />
 

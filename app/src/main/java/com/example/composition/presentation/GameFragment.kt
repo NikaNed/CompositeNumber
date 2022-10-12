@@ -13,9 +13,9 @@ import com.example.composition.domain.entites.GameResult
 
 class GameFragment : Fragment() {
 
-    private val args by navArgs<GameFragmentArgs>() //получаем аргументы
+    private val args by navArgs<GameFragmentArgs>()
 
-    private val viewModelFactory by lazy { //создание фабрики
+    private val viewModelFactory by lazy {
         GameViewModelFactory(args.level, requireActivity().application)
     }
 

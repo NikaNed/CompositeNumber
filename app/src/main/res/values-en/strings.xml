@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CompositionGame</string>
+    <string name="composition_number">Number composition</string>
+    <string name="button_understand">Okay</string>
+    <string name="game_rules">Rules of the game: there will be three figures in front of you, two below and one above, two of them will contain numbers. It is necessary that the sum of the numbers from the two lower figures be equal to the number in the upper figure, for this you need to insert the missing number.\n\nExample: the number 7 is in the upper circle, the question mark is in one of the lower ones, and the number 4 is in the other. So, the number 3 should be in the place of the question mark, because 3 + 4 = 7.</string>
+    <string name="choose_level">Choose a level:</string>
+    <string name="level_test">Test level</string>
+    <string name="level_easy">Easy level</string>
+    <string name="level_normal">Normal level</string>
+    <string name="level_hard">Hard level</string>
+    <string name="progress_answer">Right answer %s (min %s)</string>
+    <string name="required_answer">Required answers: %s</string>
+    <string name="required_percentage">Required percentage: %s</string>
+    <string name="score_percentage">Percentage of correct answers: %s</string>
+    <string name="score_answer">Your score: %s</string>
+    <string name="button_retry">Retry</string>
+
+</resources>

@@ -29,7 +29,7 @@ class GameViewModel(
     private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
 
     private val _formattedTime = MutableLiveData<String>()
-    val formattedTime: LiveData<String> //отображение времени до конца игры
+    val formattedTime: LiveData<String> //timer
         get() = _formattedTime
 
     private val _question = MutableLiveData<Question>()
@@ -37,7 +37,7 @@ class GameViewModel(
         get() = _question
 
     private val _percentOfRightAnswers = MutableLiveData<Int>()
-    val percentOfRightAnswers: LiveData<Int> //отображаем процент правильных ответов
+    val percentOfRightAnswers: LiveData<Int>
         get() = _percentOfRightAnswers
 
     private val _progressAnswers = MutableLiveData<String>()
@@ -63,7 +63,7 @@ class GameViewModel(
     private var countOfRightAnswers = 0
     private var countOfQuestion = 0
 
-    init { //при создании viewModel игра стартует автоматически и не нужно вызывать его из фрагмента
+    init {
         startGame()
     }
 
@@ -115,7 +115,6 @@ class GameViewModel(
         val percent = calculatePercent()
         _percentOfRightAnswers.value = percent
         _progressAnswers.value = String.format(application.resources.getString(R.string.progress_answer),
-            //получаем строку из ресурсов
             countOfRightAnswers, //передаем количество правильных ответов
             gameSettings.minCountOfRightAnswers //берем из настроек игры мин кол-во правильных ответов
         )

@@ -61,9 +61,9 @@ fun bindEmojiResult(imageView: ImageView, winner: Boolean) {
 
 private fun getSmileResId(winner: Boolean): Int {
     return if (winner) {
-        R.drawable.ic_emoji_happy
+        R.drawable.ic_star_emoji
     } else {
-        R.drawable.ic_emoji_sad
+        R.drawable.ic_sad_emoji
     }
 }
 
