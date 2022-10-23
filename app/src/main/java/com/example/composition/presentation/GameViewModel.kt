@@ -33,7 +33,7 @@ class GameViewModel(
         get() = _formattedTime
 
     private val _question = MutableLiveData<Question>()
-    val question: LiveData<Question> //отображение вопросов и вариантов ответов, видимого числа
+    val question: LiveData<Question>
         get() = _question
 
     private val _percentOfRightAnswers = MutableLiveData<Int>()
@@ -41,23 +41,23 @@ class GameViewModel(
         get() = _percentOfRightAnswers
 
     private val _progressAnswers = MutableLiveData<String>()
-    val progressAnswers: LiveData<String> //отображаем прогресс по ответам
+    val progressAnswers: LiveData<String>
         get() = _progressAnswers
 
     private val _enoughAnswers = MutableLiveData<Boolean>()
-    val enoughAnswers: LiveData<Boolean> //отображаем достаточное количество правильных ответов
+    val enoughAnswers: LiveData<Boolean>
         get() = _enoughAnswers
 
     private val _enoughPercent = MutableLiveData<Boolean>()
-    val enoughPercent: LiveData<Boolean> //отображаем достаточный процент правильных ответов
+    val enoughPercent: LiveData<Boolean>
         get() = _enoughPercent
 
     private val _minPercent = MutableLiveData<Int>()
-    val minPercent: LiveData<Int> //отображаем минимальный процент правильных ответов
+    val minPercent: LiveData<Int>
         get() = _minPercent
 
     private val _gameResult = MutableLiveData<GameResult>()
-    val gameResult: LiveData<GameResult> //отображаем результат игры
+    val gameResult: LiveData<GameResult>
         get() = _gameResult
 
     private var countOfRightAnswers = 0
@@ -115,8 +115,8 @@ class GameViewModel(
         val percent = calculatePercent()
         _percentOfRightAnswers.value = percent
         _progressAnswers.value = String.format(application.resources.getString(R.string.progress_answer),
-            countOfRightAnswers, //передаем количество правильных ответов
-            gameSettings.minCountOfRightAnswers //берем из настроек игры мин кол-во правильных ответов
+            countOfRightAnswers,
+            gameSettings.minCountOfRightAnswers
         )
         _enoughAnswers.value = countOfRightAnswers >= gameSettings.minCountOfRightAnswers
         _enoughPercent.value = percent >= gameSettings.minPercentOfRightAnswers
