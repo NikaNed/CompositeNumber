@@ -44,7 +44,7 @@ class ChooseLevelFragment : Fragment() {
     private fun launchGameLevel(level: Level) {
         findNavController().navigate(
             ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level)
-        ) //передаем аргументы
+        ) //send arguments
     }
 
     override fun onDestroyView() {
